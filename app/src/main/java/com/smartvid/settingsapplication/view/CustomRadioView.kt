@@ -107,6 +107,7 @@ class CustomRadioGroup : LinearLayout {
     private fun setCheckedStateForView(viewId: Int, checked: Boolean) {
         val checkedView = findViewById<View>(viewId)
         if (checkedView != null && checkedView is RadioButton) {
+            checkedView.isSelected = checked
             checkedView.isChecked = checked
         }
     }

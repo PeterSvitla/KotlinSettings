@@ -2,15 +2,18 @@ package com.smartvid.settingsapplication.view
 
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.preference.*
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceGroup
+import androidx.preference.PreferenceManager
+import com.google.gson.Gson
 import com.smartvid.settingsapplication.R
-import com.smartvid.settingsapplication.model.SETTING_KIND
 import com.smartvid.settingsapplication.menu.menu_activity.SettingsActivity
+import com.smartvid.settingsapplication.model.SETTING_KIND
 import com.smartvid.settingsapplication.model.TextDataModel
 import com.smartvid.settingsapplication.viewmodel.SettingViewModel
-import java.util.*
 
 class MainPreferenceFragment(private var handleClicks: Boolean) : PreferenceFragmentCompat() {
 
@@ -19,13 +22,13 @@ class MainPreferenceFragment(private var handleClicks: Boolean) : PreferenceFrag
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
         PreferenceManager.setDefaultValues(
-            requireContext(), R.xml.root_preferences_simplified,
+            requireContext(), R.xml.root_preferences,
             false
         )
     }
 
     private fun updateUI(updatedSetting: TextDataModel?) {
-        when(updatedSetting?.settingKind) {
+        when (updatedSetting?.settingKind) {
             SETTING_KIND.QUALITY -> {
                 Log.i("Update", "Quality UI setting should be updated $updatedSetting")
             }
@@ -54,46 +57,27 @@ class MainPreferenceFragment(private var handleClicks: Boolean) : PreferenceFrag
 
     private fun updatePrefSummary(p: Preference) {
 
-        if (p is ListPreference) {
+        val modelQuality = Gson().fromJson(
+            activity?.getPreferences(AppCompatActivity.MODE_PRIVATE)?.getString(
+                resources.getString(R.string.key_quality), null
+            ), TextDataModel::class.java
+        )
 
-            val dataQuality = resources.getStringArray(R.array.pref_upload_quality_entries)
-            val dataQualitySummary = resources.getStringArray(R.array.pref_upload_quality_summary)
+        val modelUpload = Gson().fromJson(
+            activity?.getPreferences(AppCompatActivity.MODE_PRIVATE)?.getString(
+                resources.getString(R.string.key_upload), null
+            ), TextDataModel::class.java
+        )
 
-            val dataType = resources.getStringArray(R.array.pref_upload_type_entries)
-            val dataTypeSummary = resources.getStringArray(R.array.pref_upload_type_summary)
-
-            val foundQuality = Arrays.stream(dataQuality).anyMatch { t -> t == p.entry }
-            val foundType = Arrays.stream(dataType).anyMatch { t -> t == p.entry }
-
-            Log.d("Test", "Found quality: $foundQuality Found type: $foundType");
-
-            when(p.entry) {
-                dataQuality[0] -> {
-                    p.setTitle(dataQuality[0])
-                    p.setSummary(dataQualitySummary[0])
-                }
-                dataQuality[1] -> {
-                    p.setTitle(dataQuality[1])
-                    p.setSummary(dataQualitySummary[1])
-                }
-                dataQuality[2] -> {
-                    p.setTitle(dataQuality[2])
-                    p.setSummary(dataQualitySummary[2])
-                }
-                dataType[0] -> {
-                    p.setTitle(dataType[0])
-                    p.setSummary(dataTypeSummary[0])
-                }
-                dataType[1] -> {
-                    p.setTitle(dataType[1])
-                    p.setSummary(dataTypeSummary[1])
-                }
-                else -> {
-                    p.setTitle("")
-                    p.setSummary("")
-                }
+        when (p.key) {
+            resources.getString(R.string.key_upload) -> {
+                p.title = modelUpload.title
+                p.summary = modelUpload.summary
             }
-
+            resources.getString(R.string.key_quality) -> {
+                p.title = modelQuality.title
+                p.summary = modelQuality.summary
+            }
         }
     }
 
@@ -115,12 +99,12 @@ class MainPreferenceFragment(private var handleClicks: Boolean) : PreferenceFrag
         return super.onPreferenceTreeClick(preference)
     }
 
-    private fun getFieldState(settingType : SETTING_KIND) : TextDataModel {
+    private fun getFieldState(settingType: SETTING_KIND): TextDataModel {
         val dataQuality = resources.getStringArray(R.array.pref_upload_quality_entries)
         val dataQualitySummary = resources.getStringArray(R.array.pref_upload_quality_summary)
 
         val dataType = resources.getStringArray(R.array.pref_upload_type_entries)
         val dataTypeSummary = resources.getStringArray(R.array.pref_upload_type_summary)
-        return TextDataModel(0,"", "", settingType)
+        return TextDataModel(0, "", "", settingType)
     }
 }

@@ -30,7 +30,9 @@ class FileUploadSettingsFragment : Fragment() {
 
         val model = Gson().fromJson(
             activity?.getPreferences(AppCompatActivity.MODE_PRIVATE)?.getString(
-                resources.getString(R.string.key_upload), null), TextDataModel::class.java)
+                resources.getString(R.string.key_upload), null
+            ), TextDataModel::class.java
+        )
 
         Log.i("Test", "Model: $model")
         if (model == null) {

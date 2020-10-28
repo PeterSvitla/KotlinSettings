@@ -30,7 +30,9 @@ class FileQualitySettingsFragment : Fragment() {
 
         val model = Gson().fromJson(
             activity?.getPreferences(AppCompatActivity.MODE_PRIVATE)?.getString(
-                resources.getString(R.string.key_quality), null), TextDataModel::class.java)
+                resources.getString(R.string.key_quality), null
+            ), TextDataModel::class.java
+        )
 
         Log.i("Test", "Model: $model")
         if (model == null) {
@@ -39,7 +41,7 @@ class FileQualitySettingsFragment : Fragment() {
             view?.findViewById<CustomRadioGroup>(R.id.radioGroup)?.check(R.id.option_high)
         } else {
             Log.i("Test", "Stored case: " + model.setting_id)
-            when(model.setting_id){
+            when (model.setting_id) {
                 0 -> {
                     view?.findViewById<CustomRadioGroup>(R.id.radioGroup)?.check(R.id.option_full)
                 }

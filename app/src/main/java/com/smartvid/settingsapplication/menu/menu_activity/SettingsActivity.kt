@@ -25,17 +25,23 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayHomeAsUpEnabled(false)
             supportActionBar!!.setTitle(R.string.title_activity_settings)
             supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.settings, MainPreferenceFragment(handleClicks = true))
-                    .commit()
+                .beginTransaction()
+                .replace(R.id.settings, MainPreferenceFragment(handleClicks = true))
+                .commit()
 
-            model.currentUploadKind.value = gson.fromJson(getPreferences(MODE_PRIVATE).getString(
-                resources.getString(R.string.key_upload), null), TextDataModel::class.java)
-            model.currentUploadQuality.value = gson.fromJson(getPreferences(MODE_PRIVATE).getString(
-                resources.getString(R.string.key_quality), null), TextDataModel::class.java)
+            model.currentUploadKind.value = gson.fromJson(
+                getPreferences(MODE_PRIVATE).getString(
+                    resources.getString(R.string.key_upload), null
+                ), TextDataModel::class.java
+            )
+            model.currentUploadQuality.value = gson.fromJson(
+                getPreferences(MODE_PRIVATE).getString(
+                    resources.getString(R.string.key_quality), null
+                ), TextDataModel::class.java
+            )
 
-            Log.i("Test", "Upload model: " + (model.currentUploadKind.getValue()?.title ?: ""))
-            Log.i("Test", "Quality model: " + (model.currentUploadQuality.getValue()?.title ?: ""))
+            Log.i("Test", "Upload model: " + (model.currentUploadKind.value?.title ?: ""))
+            Log.i("Test", "Quality model: " + (model.currentUploadQuality.value?.title ?: ""))
 
             // Create the observer which updates the UI.
             val settingObserver = Observer<TextDataModel> { updatedSetting ->
@@ -84,7 +90,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         Log.i("Test", "Selected a field " + v!!.id);
-        when(v.id) {
+        when (v.id) {
             R.id.option_full -> {
                 val textDataModel = TextDataModel(
                     0, getString(R.string.resolution_full), getString(
