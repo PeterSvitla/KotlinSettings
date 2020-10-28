@@ -24,7 +24,7 @@ class FileUploadSettingsFragment : Fragment() {
     ): View? {
         viewFragment = inflater.inflate(R.layout.settings_type, container, false)
         initUi()
-        return view
+        return viewFragment
     }
 
     private fun initUi() {
@@ -39,15 +39,15 @@ class FileUploadSettingsFragment : Fragment() {
         if (model == null) {
             Log.i("Test", "Default case ")
             //default first open state
-            viewFragment?.findViewById<CustomRadioGroup>(R.id.type_group)?.check(R.id.option_wifi)
+            viewFragment.findViewById<CustomRadioGroup>(R.id.radioGroup)?.check(R.id.option_wifi_cellular)
         } else {
             Log.i("Test", "Stored case: " + model.setting_id)
             when(model.setting_id){
                 0 -> {
-                    viewFragment?.findViewById<CustomRadioGroup>(R.id.type_group)?.check(R.id.option_wifi)
+                    viewFragment.findViewById<CustomRadioGroup>(R.id.radioGroup)?.check(R.id.option_wifi)
                 }
                 1 -> {
-                    viewFragment?.findViewById<CustomRadioGroup>(R.id.type_group)?.check(R.id.option_wifi_cellular)
+                    viewFragment.findViewById<CustomRadioGroup>(R.id.radioGroup)?.check(R.id.option_wifi_cellular)
                 }
             }
         }

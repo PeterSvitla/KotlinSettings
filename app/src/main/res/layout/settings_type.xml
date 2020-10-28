@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/root"
     android:padding="16dp">
 
     <TextView
@@ -12,24 +12,80 @@
         android:text="@string/file_upload_header" />
 
     <com.smartvid.settingsapplication.view.CustomRadioGroup
-        android:id="@+id/type_group"
+        android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="8dp">
 
-        <RadioButton
-            android:id="@+id/option_wifi"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="@string/wifi_only"/>
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/option_wifi_cellular"
-            android:layout_width="wrap_content"
+            <RadioButton
+                android:id="@+id/option_wifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:clickable="false"
+                android:onClick="onClick" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wifi_only"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="@string/wifi_or_cellular"/>
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="4dp">
+
+            <RadioButton
+                android:id="@+id/option_wifi_cellular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:clickable="false"
+                android:onClick="onClick" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wifi_or_cellular"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/optimal_performance"
+                    android:textColor="@android:color/tertiary_text_dark" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </com.smartvid.settingsapplication.view.CustomRadioGroup>
 </LinearLayout>

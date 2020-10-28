@@ -25,4 +25,5 @@
 
     <!-- Details -->
     <string name="optimal_performance">Optimal performance in the field.</string>
+    <string name="empty_space" />
 </resources>
