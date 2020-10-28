@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <string-array name="pref_upload_quality_entries">
-            <item>Full Resolution</item>
-            <item>High Resolution</item>
-            <item>Medium Resolution</item>
-        </string-array>
+<resources>
 
-        <string-array name="pref_upload_quality_values">
-            <item>0</item>
-            <item>1</item>
-            <item>2</item>
-        </string-array>
-
+    <string-array name="pref_upload_quality_entries">
+        <item>@string/resolution_full</item>
+        <item>@string/resolution_high</item>
+        <item>@string/resolution_medium</item>
+    </string-array>
+    <string-array name="pref_upload_quality_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
     <string-array name="pref_upload_quality_summary">
-        <item>Slower upload speed</item>
-        <item>Great visual quality at reduced file size</item>
-        <item>Optimized for faster uploads</item>
+        <item>@string/resolution_full_detail</item>
+        <item>@string/resolution_high_details</item>
+        <item>@string/resolution_medium_details</item>
     </string-array>
 
     <string-array name="pref_upload_type_entries">
@@ -28,7 +27,7 @@
     </string-array>
     <string-array name="pref_upload_type_summary">
         <item> </item>
-        <item>Optimal performance in the field.</item>
+        <item>@string/optimal_performance</item>
     </string-array>
 
-    </resources>
+</resources>

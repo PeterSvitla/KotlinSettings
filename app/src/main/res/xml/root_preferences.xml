@@ -12,9 +12,7 @@
 
         <Preference
             app:key="@string/key_quality"
-            app:title="@string/file_quality"
-            app:icon="@android:drawable/ic_menu_gallery"
-            app:summary="@string/optimal_performance"/>
+            app:icon="@android:drawable/ic_menu_gallery"/>
 
     </PreferenceCategory>
 
