@@ -39,7 +39,7 @@ class FileUploadSettingsFragment : Fragment() {
         if (model == null) {
             Log.i("Test", "Default case ")
             //default first open state
-            view?.findViewById<CustomRadioGroup>(R.id.type_group)?.check(R.id.option_wifi)
+            viewFragment?.findViewById<CustomRadioGroup>(R.id.type_group)?.check(R.id.option_wifi)
         } else {
             Log.i("Test", "Stored case: " + model.setting_id)
             when(model.setting_id){
