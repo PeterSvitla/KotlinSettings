@@ -12,7 +12,7 @@ import android.widget.RadioGroup
 import androidx.annotation.IdRes
 
 
-class CustomRadioGroup : LinearLayout {
+class CustomRadioGroup : LinearLayout, View.OnClickListener {
     // holds the checked id; the selection is empty by default
     @get:IdRes
     var checkedRadioButtonId = -1
@@ -37,7 +37,7 @@ class CustomRadioGroup : LinearLayout {
 
     private fun init() {
         mChildOnCheckedChangeListener = CheckedStateTracker()
-        mPassThroughListener = PassThroughHierarchyChangeListener()
+        mPassThroughListener = PassThroughHierarchyChangeListener(this)
         super.setOnHierarchyChangeListener(mPassThroughListener)
     }
 
@@ -193,8 +193,9 @@ class CustomRadioGroup : LinearLayout {
         }
     }
 
-    private inner class PassThroughHierarchyChangeListener :
+    private inner class PassThroughHierarchyChangeListener(var onClickListener: OnClickListener) :
         OnHierarchyChangeListener {
+
         internal var mOnHierarchyChangeListener: OnHierarchyChangeListener? = null
         fun traverseTree(view: View) {
             if (view is RadioButton) {
@@ -207,6 +208,8 @@ class CustomRadioGroup : LinearLayout {
                 view.setOnCheckedChangeListener(
                     mChildOnCheckedChangeListener
                 )
+            } else if (view is LinearLayout){
+                view.setOnClickListener(onClickListener)
             }
             if (view !is ViewGroup) {
                 return
@@ -239,8 +242,18 @@ class CustomRadioGroup : LinearLayout {
         override fun onChildViewRemoved(parent: View, child: View) {
             if (parent === this@CustomRadioGroup && child is RadioButton) {
                 child.setOnCheckedChangeListener(null)
+            } else if (parent === this@CustomRadioGroup && child is LinearLayout) {
+                child.setOnClickListener(null)
             }
             mOnHierarchyChangeListener?.onChildViewRemoved(parent, child)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        val viewParent: LinearLayout = v?.parent as LinearLayout
+        val child = viewParent.getChildAt(0)
+        if (child is RadioButton) {
+            child.isChecked = true
         }
     }
 }
