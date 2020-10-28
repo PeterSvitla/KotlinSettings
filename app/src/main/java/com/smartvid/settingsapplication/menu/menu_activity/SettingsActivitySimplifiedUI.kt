@@ -1,10 +1,11 @@
-package com.smartvid.settingsapplication
+package com.smartvid.settingsapplication.menu.menu_activity
 
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.*
+import com.smartvid.settingsapplication.R
 import java.util.*
 
 
