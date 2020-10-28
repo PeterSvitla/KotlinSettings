@@ -235,9 +235,10 @@ class CustomRadioGroup : LinearLayout, View.OnClickListener {
 
     override fun onClick(v: View?) {
         val viewParent: LinearLayout = v?.parent as LinearLayout
+        //TODO: ADD Smart recognition of the RadioButton position in a parent layout
         val child = viewParent.getChildAt(0)
         if (child is RadioButton) {
-            child.isChecked = true
+            child.performClick()
         }
     }
 }
