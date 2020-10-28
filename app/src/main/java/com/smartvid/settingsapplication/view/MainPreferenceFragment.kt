@@ -13,6 +13,7 @@ import com.smartvid.settingsapplication.R
 import com.smartvid.settingsapplication.menu.menu_activity.SettingsActivity
 import com.smartvid.settingsapplication.model.SETTING_KIND
 import com.smartvid.settingsapplication.model.TextDataModel
+import com.smartvid.settingsapplication.util.Constants
 import com.smartvid.settingsapplication.viewmodel.SettingViewModel
 
 class MainPreferenceFragment(private var handleClicks: Boolean) : PreferenceFragmentCompat() {
@@ -47,7 +48,7 @@ class MainPreferenceFragment(private var handleClicks: Boolean) : PreferenceFrag
     private fun initSummary(p: Preference) {
         if (p is PreferenceGroup) {
             val pGrp: PreferenceGroup = p as PreferenceGroup
-            for (i in 0 until pGrp.getPreferenceCount()) {
+            for (i in 0 until pGrp.preferenceCount) {
                 initSummary(pGrp.getPreference(i))
             }
         } else {
@@ -57,13 +58,13 @@ class MainPreferenceFragment(private var handleClicks: Boolean) : PreferenceFrag
 
     private fun updatePrefSummary(p: Preference) {
 
-        val modelQuality = Gson().fromJson(
+        var modelQuality = Gson().fromJson(
             activity?.getPreferences(AppCompatActivity.MODE_PRIVATE)?.getString(
                 resources.getString(R.string.key_quality), null
             ), TextDataModel::class.java
         )
 
-        val modelUpload = Gson().fromJson(
+        var modelUpload = Gson().fromJson(
             activity?.getPreferences(AppCompatActivity.MODE_PRIVATE)?.getString(
                 resources.getString(R.string.key_upload), null
             ), TextDataModel::class.java
@@ -71,10 +72,16 @@ class MainPreferenceFragment(private var handleClicks: Boolean) : PreferenceFrag
 
         when (p.key) {
             resources.getString(R.string.key_upload) -> {
+                if (modelUpload == null) {
+                    modelUpload = getFieldState(SETTING_KIND.UPLOAD_WAY)
+                }
                 p.title = modelUpload.title
                 p.summary = modelUpload.summary
             }
             resources.getString(R.string.key_quality) -> {
+                if (modelQuality == null) {
+                    modelQuality = getFieldState(SETTING_KIND.QUALITY)
+                }
                 p.title = modelQuality.title
                 p.summary = modelQuality.summary
             }
@@ -105,6 +112,11 @@ class MainPreferenceFragment(private var handleClicks: Boolean) : PreferenceFrag
 
         val dataType = resources.getStringArray(R.array.pref_upload_type_entries)
         val dataTypeSummary = resources.getStringArray(R.array.pref_upload_type_summary)
-        return TextDataModel(0, "", "", settingType)
+
+        return if (settingType == SETTING_KIND.QUALITY) {
+            TextDataModel(Constants.DEFAULT_QUALITY_ID, dataQuality[Constants.DEFAULT_QUALITY_ID], dataQualitySummary[Constants.DEFAULT_QUALITY_ID], settingType)
+        } else {
+            TextDataModel(Constants.DEFAULT_UPLOAD_ID, dataType[Constants.DEFAULT_UPLOAD_ID], dataTypeSummary[Constants.DEFAULT_UPLOAD_ID], settingType)
+        }
     }
 }
