@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">SmartVid Settings Application</string>
+    <!-- Settings Activity Title -->
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="file_upload_header">File Upload</string>
+    <string name="file_quality">File Quality</string>
+
+    <string name="key_upload">file_upload</string>
+    <string name="key_quality">file_quality</string>
+
+
+    <string name="summary_upload_video_quality">File Quality</string>
+    <string name="title_upload_quality">File Quality</string>
+
+    <string name="summary_upload_type">File Upload</string>
+    <string name="title_upload_type">File Upload</string>
+
+    <!-- Preference Items -->
+    <string name="wifi_or_cellular">Wifi or Cellular Data</string>
+    <string name="wifi_only">Wifi only</string>
+
+    <string name="resolution_full">Full Resolution</string>
+    <string name="resolution_full_detail">Slower upload speed</string>
+
+    <string name="resolution_high">High Resolution</string>
+    <string name="resolution_high_details">Great visual quality at reduced file size</string>
+
+    <string name="resolution_medium">Medium Resolution</string>
+    <string name="resolution_medium_details">Optimized for faster uploads</string>
+
+
+    <!-- Details -->
+    <string name="optimal_performance">Optimal performance in the field.</string>
+</resources>
