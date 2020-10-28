@@ -3,6 +3,7 @@ package com.smartvid.settingsapplication.view
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
@@ -60,44 +61,37 @@ class CustomRadioGroup : LinearLayout, View.OnClickListener {
 
     override fun addView(child: View, index: Int, params: ViewGroup.LayoutParams) {
         if (child is RadioButton) {
-            val button = child
-            if (button.isChecked) {
+            if (child.isChecked) {
                 mProtectFromCheckedChange = true
                 if (checkedRadioButtonId != -1) {
                     setCheckedStateForView(checkedRadioButtonId, false)
                 }
                 mProtectFromCheckedChange = false
-                setCheckedId(button.id)
+                setCheckedId(child.id)
             }
         }
         super.addView(child, index, params)
     }
 
-    /**
-     *
-     * Sets the selection to the radio button whose identifier is passed in
-     * parameter. Using -1 as the selection identifier clears the selection;
-     * such an operation is equivalent to invoking [.clearCheck].
-     *
-     * @param id the unique id of the radio button to select in this group
-     * @see .getCheckedRadioButtonId
-     * @see .clearCheck
-     */
     public fun check(@IdRes id: Int) {
-        // don't even bother
+        Log.i("Test", "Check")
         if (id != -1 && id == checkedRadioButtonId) {
+            Log.i("Test", "Check case 1")
             return
         }
         if (checkedRadioButtonId != -1) {
+            Log.i("Test", "Check case 2")
             setCheckedStateForView(checkedRadioButtonId, false)
         }
         if (id != -1) {
+            Log.i("Test", "Check case 3")
             setCheckedStateForView(id, true)
         }
         setCheckedId(id)
     }
 
     private fun setCheckedId(@IdRes id: Int) {
+        Log.i("Test", "setCheckedId $id")
         checkedRadioButtonId = id
         if (mOnCheckedChangeListener != null) {
             mOnCheckedChangeListener!!.onCheckedChanged(this, checkedRadioButtonId)
@@ -107,20 +101,11 @@ class CustomRadioGroup : LinearLayout, View.OnClickListener {
     private fun setCheckedStateForView(viewId: Int, checked: Boolean) {
         val checkedView = findViewById<View>(viewId)
         if (checkedView != null && checkedView is RadioButton) {
-            checkedView.isSelected = checked
             checkedView.isChecked = checked
+            //checkedView.isSelected = checked
         }
     }
 
-    /**
-     *
-     * Clears the selection. When the selection is cleared, no radio button
-     * in this group is selected and [.getCheckedRadioButtonId] returns
-     * null.
-     *
-     * @see .check
-     * @see .getCheckedRadioButtonId
-     */
     fun clearCheck() {
         check(-1)
     }
@@ -214,12 +199,11 @@ class CustomRadioGroup : LinearLayout, View.OnClickListener {
             if (view !is ViewGroup) {
                 return
             }
-            val viewGroup = view
-            if (viewGroup.childCount == 0) {
+            if (view.childCount == 0) {
                 return
             }
-            for (i in 0 until viewGroup.childCount) {
-                traverseTree(viewGroup.getChildAt(i))
+            for (i in 0 until view.childCount) {
+                traverseTree(view.getChildAt(i))
             }
         }
 

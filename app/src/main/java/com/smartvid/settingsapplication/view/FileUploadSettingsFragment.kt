@@ -15,13 +15,14 @@ import com.smartvid.settingsapplication.viewmodel.SettingViewModel
 
 class FileUploadSettingsFragment : Fragment() {
     private val model: SettingViewModel by viewModels()
+    private lateinit var viewFragment: View
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.settings_type, container, false)
+        viewFragment = inflater.inflate(R.layout.settings_type, container, false)
         initUi()
         return view
     }
@@ -43,10 +44,10 @@ class FileUploadSettingsFragment : Fragment() {
             Log.i("Test", "Stored case: " + model.setting_id)
             when(model.setting_id){
                 0 -> {
-                    view?.findViewById<CustomRadioGroup>(R.id.type_group)?.check(R.id.option_wifi)
+                    viewFragment?.findViewById<CustomRadioGroup>(R.id.type_group)?.check(R.id.option_wifi)
                 }
                 1 -> {
-                    view?.findViewById<CustomRadioGroup>(R.id.type_group)?.check(R.id.option_wifi_cellular)
+                    viewFragment?.findViewById<CustomRadioGroup>(R.id.type_group)?.check(R.id.option_wifi_cellular)
                 }
             }
         }

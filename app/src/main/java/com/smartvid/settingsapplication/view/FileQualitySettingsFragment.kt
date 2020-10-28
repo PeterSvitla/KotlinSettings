@@ -15,15 +15,16 @@ import com.smartvid.settingsapplication.viewmodel.SettingViewModel
 
 class FileQualitySettingsFragment : Fragment() {
     private val model: SettingViewModel by viewModels()
+    private lateinit var viewFragment: View
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.settings_quality, container, false)
+        viewFragment = inflater.inflate(R.layout.settings_quality, container, false)
         initUi()
-        return view
+        return viewFragment
     }
 
     private fun initUi() {
@@ -43,13 +44,16 @@ class FileQualitySettingsFragment : Fragment() {
             Log.i("Test", "Stored case: " + model.setting_id)
             when (model.setting_id) {
                 0 -> {
-                    view?.findViewById<CustomRadioGroup>(R.id.radioGroup)?.check(R.id.option_full)
+                    Log.i("Test", "RadioGroup0: " + view?.findViewById<CustomRadioGroup>(R.id.radioGroup))
+                    viewFragment?.findViewById<CustomRadioGroup>(R.id.radioGroup)?.check(R.id.option_full)
                 }
                 1 -> {
-                    view?.findViewById<CustomRadioGroup>(R.id.radioGroup)?.check(R.id.option_high)
+                    Log.i("Test", "RadioGroup1: " + view?.findViewById<CustomRadioGroup>(R.id.radioGroup))
+                    viewFragment?.findViewById<CustomRadioGroup>(R.id.radioGroup)?.check(R.id.option_high)
                 }
                 2 -> {
-                    view?.findViewById<CustomRadioGroup>(R.id.radioGroup)?.check(R.id.option_medium)
+                    Log.i("Test", "RadioGroup2: " + view?.findViewById<CustomRadioGroup>(R.id.radioGroup))
+                    viewFragment?.findViewById<CustomRadioGroup>(R.id.radioGroup)?.check(R.id.option_medium)
                 }
             }
         }
